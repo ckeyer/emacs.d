@@ -19,34 +19,47 @@
  '(company-tooltip-common-selection ((((type x)) (:inherit company-tooltip-selection :weight bold)) (t (:inherit company-tooltip-selection))))
  '(company-tooltip-selection ((t (:background "steelblue" :foreground "white")))))
 
-;; (define-key global-map [C-return] 'set-mark-command)
-(global-set-key [?\S- ] 'set-mark-command)
-;;(add-to-list 'load-path "~/.emacs.d/")
 (add-to-list 'load-path "~/.emacs.d/elpa/company-0.8.12/")
 (add-to-list 'load-path "~/.emacs.d/elpa/go-mode-20150503.258/")
-(add-to-list 'load-path "~/.emacs.d/elpa/sdcv-mode/")
+(add-to-list 'load-path "~/.emacs.d/lisp/sdcv-mode/")
+(add-to-list 'load-path "~/.emacs.d/lisp/highlight-parentheses/")
 ;;(add-to-list 'load-path "~/.emacs.d/elpa/popup-20150609.2145/")
 
 (require 'company)
 (require 'company-go)
+(require 'highlight-parentheses)
+(require 'sdcv-mode)
+
+(global-set-key (kbd "C-,") 'sdcv-search) ;; 字典查询
+(global-set-key (kbd "M-g") 'goto-line) 
+(global-set-key [?\S- ] 'set-mark-command) ;; Shift+Space
 
 (setq company-tooltip-limit 20)                      ; bigger popup window
 (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
 (setq company-echo-delay 0)                          ; remove annoying blinking
 (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
 
-(add-hook 'go-mode-hook (lambda ()
-			  (gofmt-before-save)
-			  (global-set-key (kbd "C-.") 'gofmt)
-                          (set (make-local-variable 'company-backends) '(company-go))
-                          (company-mode)))
-(add-hook 'python-mode-hook (lambda ()
-                          ;; (set (make-local-variable 'company-backends) '(company-pysmell))
-                          (auto-complete-mode)))
+(setq user-full-name "Ckeyer")
+(setq user-mail-address "me@ckeyer.com")
 
+;; 显示行列号
+(global-linum-mode t)
+(setq column-number-mode t)
+(setq line-number-mode t)
 
+;; tab键为8个字符宽度
+(setq default-tab-width 8)
 
+;; 防止页面滚动时跳动， scroll-margin 3 可以在靠近屏幕边沿3行时就开始滚动，可以很好的看到上下文。
+(setq scroll-margin 3 scroll-conservatively 10000)
 
+;; 在标题栏显示buffer的名字
+(setq frame-title-format "emacs@%b")
+
+;; 在行首 C-k 时，同时删除该行。
+(setq-default kill-whole-line t)
+
+;; 自动补全成对符号
 (setq skeleton-pair-alist 
 '((?\" _ "\"" >)
 (?\' _ "\'" >)
@@ -63,9 +76,9 @@
 (global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
 
 
-  
+;; 高亮匹配括号
+(show-paren-mode 1)
 ;; (global-set-key [(f8)] 'loop-alpha)  ;;注意这行中的F8 , 可以改成你想要的按键
-
     
 (setq alpha-list '((70 65) (100 100)))
 (defun loop-alpha ()    
@@ -79,7 +92,19 @@
     )    
 )    
 
+;; GO-HOOK
+;; (define-key hs-minor-mode-map (kbd "C-c ,") 'hs-hide-block)
+;; (define-key hs-minor-mode-map (kbd "C-c .") 'hs-show-block)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+(add-hook 'go-mode-hook 'hs-minor-mode)
+(add-hook 'go-mode-hook (lambda ()
+			  (gofmt-before-save)
+			  (highlight-parentheses-mode)
+			  (global-set-key (kbd "C-.") 'gofmt)
+			  (local-set-key (kbd "M-.") 'godef-jump)
+                          (set (make-local-variable 'company-backends) '(company-go))
+                          (company-mode)))
 
-
-(require 'sdcv-mode)
-(global-set-key (kbd "C-c d") 'sdcv-search)
+;; PYTHON-HOOK
+(add-hook 'python-mode-hook 'uto-complete-mode)
+;; (set (make-local-variable 'company-backends) '(company-pysmell))
