@@ -50,7 +50,7 @@
 (setq line-number-mode t)
 
 ;; tab键为8个字符宽度
-(setq default-tab-width 8)
+(setq default-tab-width 4)
 
 ;; 防止页面滚动时跳动， scroll-margin 3 可以在靠近屏幕边沿3行时就开始滚动，可以很好的看到上下文。
 (setq scroll-margin 3 scroll-conservatively 10000)
@@ -63,11 +63,11 @@
 
 ;; 自动补全成对符号
 (setq skeleton-pair-alist 
-'((?\" _ "\"" >)
-(?\' _ "\'" >)
-(?\( _ ")" >)
-(?\[ _ "]" >)
-(?\{ _ "}" >)))
+      '((?\" _ "\"" >)
+	(?\' _ "\'" >)
+	(?\( _ ")" >)
+	(?\[ _ "]" >)
+	(?\{ _ "}" >)))
 
 (setq skeleton-pair t)
 
@@ -81,7 +81,7 @@
 ;; 高亮匹配括号
 (show-paren-mode 1)
 ;; (global-set-key [(f8)] 'loop-alpha)  ;;注意这行中的F8 , 可以改成你想要的按键
-    
+
 (setq alpha-list '((70 65) (100 100)))
 (defun loop-alpha ()    
   (interactive)    
@@ -92,7 +92,7 @@
        ) (car h) (car (cdr h)))    
     (setq alpha-list (cdr (append alpha-list (list h))))    
     )    
-)    
+  )    
 
 ;; GO-HOOK
 (add-hook 'go-mode-hook 'go-eldoc-setup)
@@ -107,4 +107,5 @@
 
 ;; PYTHON-HOOK
 (add-hook 'python-mode-hook 'uto-complete-mode)
+(add-hook 'python-mode-hook (lambda () (hs-minor-mode 1)))
 ;; (set (make-local-variable 'company-backends) '(company-pysmell))
