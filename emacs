@@ -33,6 +33,8 @@
 (global-set-key (kbd "C-,") 'sdcv-search) ;; 字典查询
 (global-set-key (kbd "M-g") 'goto-line) 
 (global-set-key [?\S- ] 'set-mark-command) ;; Shift+Space
+(global-set-key (kbd "C-c ,") (kbd "C-c @ C-h"))
+(global-set-key (kbd "C-c .") (kbd "C-c @ C-s"))  
 
 (setq company-tooltip-limit 20)                      ; bigger popup window
 (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
@@ -93,10 +95,8 @@
 )    
 
 ;; GO-HOOK
-;; (define-key hs-minor-mode-map (kbd "C-c ,") 'hs-hide-block)
-;; (define-key hs-minor-mode-map (kbd "C-c .") 'hs-show-block)
 (add-hook 'go-mode-hook 'go-eldoc-setup)
-(add-hook 'go-mode-hook 'hs-minor-mode)
+(add-hook 'go-mode-hook (lambda () (hs-minor-mode 1)))
 (add-hook 'go-mode-hook (lambda ()
 			  (gofmt-before-save)
 			  (highlight-parentheses-mode)
