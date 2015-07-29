@@ -19,7 +19,8 @@
  '(company-tooltip-common-selection ((((type x)) (:inherit company-tooltip-selection :weight bold)) (t (:inherit company-tooltip-selection))))
  '(company-tooltip-selection ((t (:background "steelblue" :foreground "white")))))
 
-(add-to-list 'load-path "~/.emacs.d/elpa/company-0.8.12/")
+(add-to-list 'load-path "~/.emacs.d/lisp/company/")
+(add-to-list 'load-path "~/.emacs.d/lisp/company-go/")
 (add-to-list 'load-path "~/.emacs.d/elpa/go-mode-20150503.258/")
 (add-to-list 'load-path "~/.emacs.d/lisp/sdcv-mode/")
 (add-to-list 'load-path "~/.emacs.d/lisp/highlight-parentheses/")
