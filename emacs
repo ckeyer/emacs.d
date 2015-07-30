@@ -19,9 +19,16 @@
  '(company-tooltip-common-selection ((((type x)) (:inherit company-tooltip-selection :weight bold)) (t (:inherit company-tooltip-selection))))
  '(company-tooltip-selection ((t (:background "steelblue" :foreground "white")))))
 
+(require 'package)  
+(setq package-archives  
+      '(("gnu" . "http://elpa.gnu.org/packages/")  
+        ("marmalade" . "http://marmalade-repo.org/packages/")  
+        ("melpa" . "http://melpa.milkbox.net/packages/")))  
+(package-initialize)
+
 (add-to-list 'load-path "~/.emacs.d/lisp/company/")
 (add-to-list 'load-path "~/.emacs.d/lisp/company-go/")
-(add-to-list 'load-path "~/.emacs.d/elpa/go-mode-20150503.258/")
+(add-to-list 'load-path "~/.emacs.d/lisp/go-mode/")
 (add-to-list 'load-path "~/.emacs.d/lisp/sdcv-mode/")
 (add-to-list 'load-path "~/.emacs.d/lisp/highlight-parentheses/")
 ;;(add-to-list 'load-path "~/.emacs.d/elpa/popup-20150609.2145/")
@@ -98,16 +105,20 @@
     )    
   )    
 
+;; 全局模式
+(yas-global-mode 1)
+(setq elpy-rpc-backend "jedi")
+
 ;; GO-HOOK
 ;; go get -u -v github.com/nsf/gocode
 ;; go get -u -v github.com/rogpeppe/godef
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'go-mode-hook (lambda () (hs-minor-mode 1)))
 (add-hook 'go-mode-hook (lambda ()
-			  (gofmt-before-save)
-			  (highlight-parentheses-mode)
-			  (local-set-key (kbd "C-.") 'gofmt)
-			  (local-set-key (kbd "M-.") 'godef-jump)
+						  (gofmt-before-save)
+						  (highlight-parentheses-mode)
+						  (local-set-key (kbd "C-.") 'gofmt)
+						  (local-set-key (kbd "M-.") 'godef-jump)
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)))
 
@@ -118,3 +129,4 @@
 (add-hook 'python-mode-hook 'uto-complete-mode)
 (add-hook 'python-mode-hook (lambda () (hs-minor-mode 1)))
 ;; (set (make-local-variable 'company-backends) '(company-pysmell))
+
