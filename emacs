@@ -68,7 +68,8 @@
 	(?\' _ "\'" >)
 	(?\( _ ")" >)
 	(?\[ _ "]" >)
-	(?\{ _ "}" >)))
+	(?\{ _ "}" >)
+	(?\{ _ ">" >)))
 
 (setq skeleton-pair t)
 
@@ -77,6 +78,8 @@
 (global-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
 (global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
+(global-set-key (kbd "<") 'skeleton-pair-insert-maybe)
+
 
 
 ;; 高亮匹配括号
@@ -96,15 +99,20 @@
   )    
 
 ;; GO-HOOK
+;; go get -u -v github.com/nsf/gocode
+;; go get -u -v github.com/rogpeppe/godef
 (add-hook 'go-mode-hook 'go-eldoc-setup)
 (add-hook 'go-mode-hook (lambda () (hs-minor-mode 1)))
 (add-hook 'go-mode-hook (lambda ()
 			  (gofmt-before-save)
 			  (highlight-parentheses-mode)
-			  (global-set-key (kbd "C-.") 'gofmt)
+			  (local-set-key (kbd "C-.") 'gofmt)
 			  (local-set-key (kbd "M-.") 'godef-jump)
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)))
+
+;; PHP-HOOK
+(add-hook 'php-mode-hook (lambda () (hs-minor-mode 1)))
 
 ;; PYTHON-HOOK
 (add-hook 'python-mode-hook 'uto-complete-mode)
