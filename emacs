@@ -64,7 +64,7 @@
 (setq scroll-margin 3 scroll-conservatively 10000)
 
 ;; 在标题栏显示buffer的名字
-(setq frame-title-format "emacs@%b")
+(setq frame-title-format "%b ckeyer@[%f]")
 
 ;; 在行首 C-k 时，同时删除该行。
 (setq-default kill-whole-line t)
