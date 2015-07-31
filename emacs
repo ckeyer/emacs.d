@@ -51,7 +51,7 @@
 (setq column-number-mode t)
 (setq line-number-mode t)
 
-;; tab键为8个字符宽度
+;; tab键为4个字符宽度
 (setq default-tab-width 4)
 
 ;; 防止页面滚动时跳动， scroll-margin 3 可以在靠近屏幕边沿3行时就开始滚动，可以很好的看到上下文。
@@ -83,6 +83,16 @@
 
 ;; 高亮匹配括号
 (show-paren-mode 1)
+(define-globalized-minor-mode global-highlight-parentheses-mode
+  highlight-parentheses-mode
+  (lambda ()
+    (highlight-parentheses-mode t)))
+(global-highlight-parentheses-mode t)
+(setq hl-paren-colors
+      '(;"#8f8f8f" ; this comes from Zenburn
+                   ; and I guess I'll try to make the far-outer parens look like this
+        "red1" "orange1" "greenyellow" "yellow1" "purple" "green1"
+        "springgreen1" "cyan1" "slateblue1" "magenta1"))
 ;; (global-set-key [(f8)] 'loop-alpha)  ;;注意这行中的F8 , 可以改成你想要的按键
 
 ;; 设施背景透明度
@@ -154,7 +164,6 @@ caps"))
 	)
   )
 
-
 ;; GO-HOOK
 ;; go get -u -v github.com/nsf/gocode
 ;; go get -u -v github.com/rogpeppe/godef
@@ -177,7 +186,6 @@ caps"))
 (add-hook 'go-mode-hook (lambda ()
                           (local-set-key (kbd "C-c i") 'go-goto-imports)))
 (add-hook 'go-mode-hook (lambda ()
-						  (highlight-parentheses-mode)
 						  (local-set-key (kbd "C-.") 'gofmt)
 						  (local-set-key (kbd "M-.") 'godef-jump)
 						  (local-set-key (kbd "<f5>") 'go-run-current-buffer)
@@ -190,6 +198,9 @@ caps"))
 ;; PYTHON-HOOK
 (add-hook 'python-mode-hook 'uto-complete-mode)
 (add-hook 'python-mode-hook (lambda () (hs-minor-mode 1)))
+(add-hook 'python-mode-hook (lambda ()
+							  (global-set-key (kbd "<f>") 'other-window)
+							  (python-shell-send-buffer &optional ARG)))
 (add-hook 'python-mode-hook
   (lambda ()
     (setq indent-tabs-mode t)
@@ -204,4 +215,3 @@ caps"))
 (global-set-key (kbd "C-c .") (kbd "C-c @ C-s"))  
 (global-set-key (kbd "<f12>") 'toggle-fullscreen)
 (global-set-key (kbd "<C-tab>") 'other-window)
-
