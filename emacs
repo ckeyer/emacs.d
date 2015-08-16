@@ -37,7 +37,7 @@
 (require 'company-go)
 (require 'highlight-parentheses)
 (require 'sdcv-mode)
-
+'(auto-complete-mode 1)
 (setq company-tooltip-limit 20)                      ; bigger popup window
 (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
 (setq company-echo-delay 0)                          ; remove annoying blinking
@@ -187,8 +187,8 @@ caps"))
                           (local-set-key (kbd "C-c i") 'go-goto-imports)))
 (add-hook 'go-mode-hook (lambda ()
 						  (local-set-key (kbd "C-.") 'gofmt)
-						  (local-set-key (kbd "M-.") 'godef-jump)
-						  (local-set-key (kbd "<f5>") 'go-run-current-buffer)
+						  (local-set-key (kbd "C-c j") 'godef-jump)
+						  (local-set-key (kbd "C-c C-b") 'go-run-current-buffer)
                           (set (make-local-variable 'company-backends) '(company-go))
                           (company-mode)))
 
@@ -196,17 +196,23 @@ caps"))
 (add-hook 'php-mode-hook (lambda () (hs-minor-mode 1)))
 
 ;; PYTHON-HOOK
-(add-hook 'python-mode-hook 'uto-complete-mode)
+;; (add-hook 'python-mode-hook 'uto-complete-mode)
 (add-hook 'python-mode-hook (lambda () (hs-minor-mode 1)))
-(add-hook 'python-mode-hook (lambda ()
-							  (global-set-key (kbd "<f>") 'other-window)
-							  (python-shell-send-buffer &optional ARG)))
 (add-hook 'python-mode-hook
   (lambda ()
     (setq indent-tabs-mode t)
-    (setq python-indent 4)
+    (setq python-indent-guess-indent-offset 4)
+    ;; (setq python-indent 4)
     (setq tab-width 4)))
+;; (add-hook 'python-mode-hook (lambda ()
+;; 							  (python-shell-send-buffer "-t test.go")))
 ;; (set (make-local-variable 'company-backends) '(company-pysmell))
+
+;; C-HOOK
+(add-hook 'c-mode-hook (lambda () (hs-minor-mode 1)))
+(add-hook 'c-mode-hook (lambda () (semantic-mode 1)))
+(add-hook 'c-mode-hook (lambda ()
+						  (local-set-key (kbd "C-c j") 'semantic-ia-fast-jump)))
 
 (global-set-key (kbd "C-,") 'sdcv-search) ;; 字典查询
 (global-set-key (kbd "M-g") 'goto-line) 
