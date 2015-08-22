@@ -52,7 +52,8 @@
 (require 'company-go)
 (require 'highlight-parentheses)
 (require 'sdcv-mode)
-'(auto-complete-mode 1)
+(global-auto-complete-mode 1)
+(cua-mode 1)
 (setq company-tooltip-limit 20)                      ; bigger popup window
 (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
 (setq company-echo-delay 0)                          ; remove annoying blinking
@@ -229,6 +230,12 @@ caps"))
 (add-hook 'c-mode-hook (lambda () (semantic-mode 1)))
 (add-hook 'c-mode-hook (lambda ()
 						  (local-set-key (kbd "C-c j") 'semantic-ia-fast-jump)))
+
+(add-hook 'css-mode-hook       
+  (lambda ()
+     (make-local-variable 'ac-ignores)
+     (add-to-list 'ac-ignores ";")))
+
 
 (global-set-key (kbd "C-,") 'sdcv-search) ;; 字典查询
 (global-set-key (kbd "M-g") 'goto-line) 
