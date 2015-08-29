@@ -46,12 +46,14 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/go-mode/")
 (add-to-list 'load-path "~/.emacs.d/lisp/sdcv-mode/")
 (add-to-list 'load-path "~/.emacs.d/lisp/highlight-parentheses/")
+(add-to-list 'load-path "~/.emacs.d/lisp/php-mode/")
 ;;(add-to-list 'load-path "~/.emacs.d/elpa/popup-20150609.2145/")
 
 (require 'company)
 (require 'company-go)
 (require 'highlight-parentheses)
 (require 'sdcv-mode)
+(require 'php-mode)
 (global-auto-complete-mode 1)
 (cua-mode 1)
 (setq company-tooltip-limit 20)                      ; bigger popup window
