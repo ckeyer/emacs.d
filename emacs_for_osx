@@ -37,8 +37,8 @@
 (require 'package)  
 (setq package-archives  
       '(("gnu" . "http://elpa.gnu.org/packages/")  
-;;        ("marmalade" . "http://marmalade-repo.org/packages/")  
-;;        ("melpa" . "http://melpa.milkbox.net/packages/")
+        ("marmalade" . "http://marmalade-repo.org/packages/")  
+        ("melpa" . "http://melpa.milkbox.net/packages/")
 		))  
 (package-initialize)
 
@@ -242,10 +242,10 @@ caps"))
      (add-to-list 'ac-ignores ";")))
 
 
-;;(global-set-key (kbd "C-,") 'sdcv-search) ;; 字典查询
+(global-set-key (kbd "C-,") 'youdao-dictionary-search-at-point+) ;; 字典查询
 (global-set-key (kbd "M-g") 'goto-line) 
 (global-set-key [?\S- ] 'set-mark-command) ;; Shift+Space
 (global-set-key (kbd "C-c ,") (kbd "C-c @ C-h"))
 (global-set-key (kbd "C-c .") (kbd "C-c @ C-s"))  
-(global-set-key (kbd "<f12>") 'toggle-fullscreen)
+(global-set-key (kbd "<f9>") 'toggle-fullscreen)
 (global-set-key (kbd "<C-tab>") 'other-window)
